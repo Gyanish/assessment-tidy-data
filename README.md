@@ -20,7 +20,7 @@
 
 ### Results
 
-**tidy.data** -- contains the final tidied output data.
+**tidydata.txt** -- contains the final tidied output data.
 
 **CodeBook.md** -- description of all variables
 

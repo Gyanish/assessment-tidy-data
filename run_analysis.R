@@ -242,7 +242,7 @@ names(tidyData)[2] <- "activity"
 #     Please upload your data set as a txt file created with write.table() using row.name=FALSE
 ####################################################################################
 
-RESULT <- "tidy.data"
+RESULT <- "tidydata.txt"
 # just check where we are
 getwd()
 write.table(tidyData, file = RESULT, row.names = TRUE)
