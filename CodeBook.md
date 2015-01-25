@@ -1,17 +1,22 @@
 ## Code Book
 (part of the coursera assessment for course "Getting and Cleaning Data")
 
-The file **tidy.data** can be read with R function read.table(). It has this table like structure:
+The tidied data set is contained within the file **tidy.data**.
+This can be easily read with R function `read.table()`.
+
+It has this table like structure:
 
 ##### row structure
 180 rows resulting from 30 test subjects during 6 tested activities.
 
 ##### column structure
-- col 1: subject id -- value range *1 .. 30*
-- col 2: activity label -- value range *LAYING SITTING STANDING WALKING WALKING_DOWNSTAIRS WALKING_UPSTAIRS*
+- col 1: subject id
+  - value range *1 .. 30*
+- col 2: activity label
+  - value range *LAYING SITTING STANDING WALKING WALKING_DOWNSTAIRS WALKING_UPSTAIRS*
 - col 3 ... col 68: original measurements aggregated as
- - either mean value of measured means
- - or mean value of measured standard deviation
+ - either the mean value of the measured means
+ - or the mean value of the measured standard deviations
 
 The original measurements have these, hopefully descriptive enough, names:
 
@@ -41,6 +46,17 @@ The original measurements have these, hopefully descriptive enough, names:
 ```
 
 To learn more see the file **data/UCI HAR Dataset/features_info.txt** from the included data.
+
+As an example looking a t row 43 and col 1 to 3
+```
+> tidyData[43,1:3]
+   subject activity tBodyAcc-mean()-X
+43      13  SITTING         0.2743285
+```
+
+means that subject 13 while SITTING has a mean value for als it's mean measurements of tBodyAcc-X
+of 0.2743285.
+
 
 ---
 

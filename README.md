@@ -1,6 +1,6 @@
 ### Coursera assessment "Getting and Cleaning Data"
 
-[Course home](https://class.coursera.org/getdata-010)
+[Class homepage](https://class.coursera.org/getdata-010)
 
 - Author: Axel Rose <axel.roeslein@googlemail.com>
 - No Copyrights, Public Domain, January 2015
@@ -18,7 +18,7 @@
 6. Please upload the tidy data set created in step 5 of the instructions. Please upload your data set as a txt file created with write.table() using row.name=FALSE
 7. Please submit a link to a Github repo with the code for performing your analysis. The code should have a file run_analysis.R in the main directory that can be run as long as the Samsung data is in your working directory. The output should be the tidy data set you submitted for part 1. You should include a README.md in the repo describing how the script works and the code book describing the variables.
 
-### Result
+### Results
 
 **tidy.data** -- contains the final tidied output data.
 
@@ -26,7 +26,11 @@
 
 The description how the result has been achieved is contained within the source file "run_analysis.R".
 
-This can be run from any R console only with slight customization of the starting directory, just search for the line `baseDir <- "~/Documents/coursera/getting-and-cleaning-data/assessment-tidy-data"`. The data source is not included in the git repository. The R script downloads it into a dynamically created "data" dir.
+This can be run as one big batch of instructions from the R console. The only customization proably needed is to set the starting directory. Just search for the line `baseDir <- "~/Documents/coursera/getting-and-cleaning-data/assessment-tidy-data"` and change it to your environment.
+
+Otherwise the instructions from the R script can be executed and checked step by step for review.
+
+The [data source](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) is not included in the git repository. The R script downloads it into subdir named "data" during runtime.
 
 
 #### Analyzed source data
