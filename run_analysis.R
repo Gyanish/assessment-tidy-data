@@ -1,9 +1,12 @@
+####################################################################################
+#
 # Coursera assessment
+# "Getting and Cleaning Data" https://class.coursera.org/getdata-010
 
 # Script: run_analysis.R
 # Author: Axel Rose <axel.roeslein@googlemail.com>
-# no copyrights, Public Domain
-# 2015
+# No Copyrights, Public Domain
+# January 2015
 
 # task description:
 # You should create one R script called run_analysis.R that does the following. 
@@ -11,7 +14,8 @@
 # 2 - Extracts only the measurements on the mean and standard deviation for each measurement. 
 # 3 - Uses descriptive activity names to name the activities in the data set
 # 4 - Appropriately labels the data set with descriptive variable names. 
-# 5 - From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+# 5 - From the data set in step 4, creates a second, independent tidy data set with the average
+#     of each variable for each activity and each subject.
 
 # 6 - Please upload the tidy data set created in step 5 of the instructions.
 #     Please upload your data set as a txt file created with write.table() using row.name=FALSE
@@ -34,9 +38,11 @@ setwd(baseDir)
 # download the source and unzip into a data directory
 dataSrc <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 dataDir <- "data"
-zipFile <- "Dataset.zip" 
+zipFile <- "Dataset.zip"
 
-if (!file.exists(dataDir)) { dir.create(dataDir) }
+if (!file.exists(dataDir)) {
+	dir.create(dataDir)
+}
 setwd(dataDir)
 
 # TODO: skip download step if already done and identical
@@ -69,7 +75,7 @@ colNames <- t(colNamesRaw[-1])
 # rm(colNamesRaw)
 
 ####################################################################################
-# 1.2 - merge within training
+# 1.2 - merge *within* training
 train1 <- read.table(paste(trainingDataDir, "/", "X_train.txt", sep = ""))
 # check to see if it is what we wanted, should return "[1] 7352  561"
 dim(train1)
@@ -92,7 +98,7 @@ train <- cbind(train1, train1subject, train1activity)
 dim(train)
 
 ####################################################################################
-# 1.3 - merge within test
+# 1.3 - merge *within* test
 test1 <- read.table(paste(testDataDir, "/", "X_test.txt", sep = ""))
 # check to see if it is what we wanted, should return "[1] 2947  561"
 dim(test1)
@@ -191,10 +197,13 @@ str(data3)
 #  $ subject.id                 : int  7 5 6 23 7 7 11 6 10 11 ...
 #  $ activity.label             : Factor w/ 6 levels "LAYING","SITTING",..: 4 4 4 4 4 4 4 4 4 4 ...
 
-# looks fine
+# looks fine (assuming the reader understands the meaning of "tBodyAcc-mean()-X", otherwise
+# have a look into "features_info.txt" as contained in the downloaded data archive, path
+# data/UCI HAR Dataset/features_info.txt)
 
 ####################################################################################
-# 5 - From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+# 5 - From the data set in step 4, creates a second, independent tidy data set with
+#     the average of each variable for each activity and each subject.
 ####################################################################################
 
 
@@ -202,7 +211,7 @@ str(data3)
 names(data3)[2:67]
 
 # check a small subset
-head(aggregate(data3[,2:4], by=list(data3$subject.id, data3$activity.label), FUN=mean))
+head(aggregate(data3[, 2:4], by = list(data3$subject.id, data3$activity.label), FUN = mean))
 #   Group.1 Group.2 tBodyAcc-mean()-X tBodyAcc-mean()-Y tBodyAcc-mean()-Z
 # 1       1  LAYING         0.2215982       -0.04051395        -0.1132036
 # 2       2  LAYING         0.2813734       -0.01815874        -0.1072456
@@ -210,7 +219,7 @@ head(aggregate(data3[,2:4], by=list(data3$subject.id, data3$activity.label), FUN
 # 4       4  LAYING         0.2635592       -0.01500318        -0.1106882
 # 5       5  LAYING         0.2783343       -0.01830421        -0.1079376
 # 6       6  LAYING         0.2486565       -0.01025292        -0.1331196
-> tail(aggregate(data3[,2:4], by=list(data3$subject.id, data3$activity.label), FUN=mean))
+tail(aggregate(data3[, 2:4], by = list(data3$subject.id, data3$activity.label), FUN = mean))
 #     Group.1          Group.2 tBodyAcc-mean()-X tBodyAcc-mean()-Y tBodyAcc-mean()-Z
 # 175      25 WALKING_UPSTAIRS         0.2779954       -0.02698635        -0.1262104
 # 176      26 WALKING_UPSTAIRS         0.2726914       -0.02816338        -0.1219435
@@ -219,7 +228,9 @@ head(aggregate(data3[,2:4], by=list(data3$subject.id, data3$activity.label), FUN
 # 179      29 WALKING_UPSTAIRS         0.2654231       -0.02994653        -0.1180006
 # 180      30 WALKING_UPSTAIRS         0.2714156       -0.02533117        -0.1246975
 
-tidyData <- aggregate(data3[,2:66], by=list(data3$subject.id, data3$activity.label), FUN=mean)
+# finally the requested tidied data
+# leaving out data3 cols 1, 68 and 69 which were introduced during the merge
+tidyData <- aggregate(data3[, 2:67], by = list(data3$subject.id, data3$activity.label), FUN = mean)
 
 # header names are ok but for the first col, setting to "subject"
 names(tidyData)[1] <- "subject"
@@ -234,14 +245,18 @@ names(tidyData)[2] <- "activity"
 RESULT <- "tidy.data"
 # just check where we are
 getwd()
-write.table(tidyData, file=RESULT, row.names = TRUE)
+write.table(tidyData, file = RESULT, row.names = TRUE)
 # check if it was written
 list.files()
+# dimension should be 180 (30 subjects x 6 activities) and 68 columns for subject, activity and 66 measurements
+dim(tidyData)
 
-# verify the output is readable and check content visually
+# verify the output is readable and check content visually ourselves and as a possible
+# help for the reviewer
 View(read.table(RESULT, header = TRUE))
 
 # uploading to github outside of R
+# git add .; git commit -m 'data cleanup'; git push
 
 ####################################################################################
 # 7 - Please submit a link to a Github repo with the code for performing your analysis.
